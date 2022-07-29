@@ -148,7 +148,7 @@ def main():
     Real motifs in Motif Path.
     
     """
-    MotifPath = "../../result/simulation/Motifs/"
+    MotifPath = "../../result/simulation2merShuffle/Motifs/"
     DatasetPath = "../../external/simulation/"
     Datanamelist = [1, 291, 282, 273]
     name2id = {1: 1, 291: 2, 282: 3, 273: 4}

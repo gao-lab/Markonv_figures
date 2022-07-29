@@ -5,6 +5,9 @@ import subprocess, re
 import numpy as np
 import pdb
 import copy
+import seaborn as sns
+import pandas as pd
+
 import matplotlib.pyplot as plt
 plt.switch_backend('agg')
 from sklearn.metrics import roc_auc_score
@@ -85,6 +88,48 @@ def kernelSelect(model, testX, TestY):
 
     return RankIndex[:10]
 
+def draw(kernels, savepath,RankIndex):
+    """
+
+    Args:
+        kernels:
+        savepath:
+
+    Returns:
+
+    """
+    kernel_len = kernels.shape[1]
+
+    two_decimal = lambda x: format(x, '.2f').rstrip('0').rstrip('.')
+    two_decimal = np.vectorize(two_decimal)
+
+    for i in range(kernels.shape[0]):
+        savepathtmp = savepath + "kernel_"+str(RankIndex[i])+".png"
+        kernel = kernels[i]
+        kernel = kernel
+
+        fig, axes = plt.subplots(1, kernel_len, figsize=(kernel_len*2, 2))
+        for k in range(kernel_len):
+            ax = axes[k]
+            drawmatrix = kernel[k, :, :]
+            sns.heatmap(drawmatrix,
+                        ax=ax,
+                        annot=two_decimal(drawmatrix),
+                        fmt="s",
+                        vmin=-1,
+                        vmax=1,
+                        # cmap=sns.light_palette("#2ecc71", as_cmap=True),
+                        cmap="Greys",
+                        cbar=False,
+                        xticklabels=["A","C","G","T"],
+                        yticklabels=False,
+                        linewidths=0)
+            # ax.set_title(f"S{k} → S{k+1}", fontsize=15)
+            ax.xaxis.tick_top()
+            ax.tick_params(bottom=False,top=False,left=False,right=False)
+
+        plt.savefig(savepathtmp, bbox_inches='tight')
+        plt.close()
 
 
 def GenerateFragments(X,onehot,model,kernelSize,path,RankIndex=None):
@@ -133,15 +178,30 @@ def mkdir(path):
     else:
         return (False)
 
+def restoreMotif(net, RankIndex):
+
+
+    kernels = net.markonv.Kernel_Full_4DTensor.data
+    kernels = kernels.cpu().numpy()
+
+    outputkernel = []
+
+    for i in range(len(RankIndex)):
+        outputkernel.append(kernels[:,:,:,RankIndex[i]])
+
+    return np.asarray(outputkernel)
+
+
+
 def main():
     """
 
     Returns:
 
     """
-    DataPath = "../../external/simulation/"
-    resultpath = "../../result/simulation/"
-    OutputPath = "../../result/simulation/Motifs"
+    DataPath = "../../external/simulation2merShuffle/"
+    resultpath = "../../result/simulation2merShuffle/"
+    OutputPath = "../../result/simulation2merShuffle/Motifs"
     mkdir(OutputPath)
     Datanamelist = [1,291,282,273]
     model_type = "MarkonvV"
@@ -170,6 +230,11 @@ def main():
             ### kernels scan sequences and find the most similar fragment
             path = OutputPath+"/"+str(name)+"/"+model_type+"/"
             mkdir(path)
+
+            kernels = restoreMotif(net, RankIndex)
+
+            draw(kernels, RankIndex, path)
+
             GenerateFragments(X_test, X_test_onehot,net,kernel_size,path,RankIndex)
 
 
