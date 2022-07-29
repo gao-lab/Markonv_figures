@@ -75,6 +75,18 @@ def run_model(KernelLen, KernelNum, RandomSeed, dataname,Modeltype):
     tmp_cmd = str(cmd + " " + DataName + " " + KernelLen + " " + str(KernelNum1) + " "
                   + RandomSeed + " " + Modeltype + " " + str(KernelNum2))
 
+
+    Outpath = DataName.replace("external", "result").replace("simulation","SpeedCompare")
+
+    modellogname = Outpath.replace("result","log")+"/"+Modeltype+"/"+ "model_KernelNum-" + str(KernelNum1) + "kernel_size-" + \
+                                str(KernelLen) + "_seed-" + str(RandomSeed) + "_batch_size-" + str(64)+".npy"
+
+    if os.path.isfile(modellogname):
+        print("already trained")
+        return
+    else:
+        print(modellogname)
+
     print(tmp_cmd)
     os.system(tmp_cmd)
 
@@ -101,15 +113,17 @@ if __name__ == '__main__':
     # grid search
     KernelLen = 10
     KernelNum = 128
-    RandomSeed = 0
+    randomSeedslist = [0, 23, 123, 345, 1234, 9, 2323, 927, 42, 48, 100, 420, 60, 320, 7767, 51]
     datasetnamelist = [1, 291, 282, 273]
     # modeltypelist = ["Markonv","MarkonvR","MarkonvV","CNN"]
     modeltypelist = ["Markonv","CNN"]
-    pool = Pool(processes=len(datasetnamelist))
+    pool = Pool(processes=20)  # len(datasetnamelist)*len(ker_size_list)*len(number_of_ker_list)*len(randomSeedslist))
     for dataname in datasetnamelist:
-        for modeltype in modeltypelist:
-            # run_model(str(KernelLen), str(KernelNum), str(RandomSeed), str(dataname), modeltype)
-            pool.apply_async(run_model, (str(KernelLen), str(KernelNum), str(RandomSeed), str(dataname),modeltype))
-            time.sleep(10)
+        for RandomSeed in randomSeedslist:
+            pool.apply_async(run_model,
+                             (str(KernelLen), str(KernelNum), str(RandomSeed), str(dataname), "Markonv"))
+            time.sleep(5)
+            pool.apply_async(run_model, (str(KernelLen), str(KernelNum), str(RandomSeed), str(dataname), "CNN"))
+            time.sleep(5)
     pool.close()
     pool.join()

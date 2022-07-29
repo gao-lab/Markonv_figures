@@ -1,7 +1,6 @@
 import os
 import pdb
 
-import numpy as np
 import torch
 import sys
 import h5py
@@ -51,8 +50,8 @@ def pick_gpu_lowest_memory():
     """Returns GPU with the least allocated memory"""
     memory_gpu_map = []
     for (gpu_id, memory) in gpu_memory_map().items():
-        if gpu_id not in [0,3,4]:
-            memory_gpu_map.append((memory,gpu_id))
+        #if gpu_id not in [0,3,4]:
+        memory_gpu_map.append((memory,gpu_id))
 
     best_memory, best_gpu = sorted(memory_gpu_map)[0]
     return best_gpu
@@ -66,23 +65,19 @@ def GridSearch(data_set, KernelLen, KernelNum, RandomSeed, Modeltype, path,GPUID
     :param KernelLen:
     :param KernelNum:
     :param RandomSeed:
-    :param type:
+    :param Modeltype: "CNN", "MarkonvV"
     :param path:
+    :param GPUID:
     :param batch_size:
     :param epoch_scheme:
     :return:
     """
     input_shape = data_set[0][0].shape[1:]
-    
-    if Modeltype=="CNN":
-        TrainTimes = trainCNN(path, data_set, KernelNum, KernelLen,
-                     RandomSeed, batch_size, epoch_scheme,GPUID=GPUID,outputName="CNN")
-    elif "Markonv" in Modeltype:
-        TrainTimes = trainMarkonv(path, data_set, KernelNum, KernelLen,
+
+
+    trainMarkonv(path, data_set, KernelNum, KernelLen,
                      RandomSeed, batch_size, epoch_scheme,GPUID=GPUID,outputName=Modeltype)
-    else:
-        raise ValueError('Invalid type: %s' % type)
-    # np.savetxt("./Sta/"+Modeltype+"_"+str(data_set[0][0].shape[0])+"_"+str(input_shape[0])+".txt",np.asarray(TrainTimes))
+
 
 def loadData(path, Modeltype):
     """
@@ -119,6 +114,7 @@ def mkdir(path):
 
 
 if __name__ == '__main__':
+    torch.set_num_threads(3)
     GPUID = str(pick_gpu_lowest_memory())
     os.environ["CUDA_VISIBLE_DEVICES"] = GPUID
     torch.cuda.set_device(int(GPUID))
@@ -136,9 +132,8 @@ if __name__ == '__main__':
     # os.environ["HDF5_USE_FILE_LOCKING"] = 'FALSE'
     data_set = loadData(DataPath, Modeltype)
     
-    Outpath = DataPath.replace("external", "result").replace("simulation","SpeedCompare")
+    Outpath = DataPath.replace("../../external/", "../../result/")
     mkdir(Outpath)
 
     GridSearch(data_set, KernelLen, KernelNum, RandomSeed,
                Modeltype, Outpath,GPUID=GPUID,KernelNum2=KernelNum2, batch_size=64, epoch_scheme=1000)
-

@@ -53,16 +53,18 @@ def DrawPic(lossDict, output_path, dataname, patience=50):
     color = {"Markonv-based network":"black", "convolution-based network":"blue",
     "bonito":"blue","Markonv-based basecaller":"black"}
 
+    validationColor = {"convolution-based network":"green","Markonv-based network":"red"}
+
     for mode in lossDict.keys():
         print(mode)
 
         modeltype = mode
-        trainloss = lossDict[mode]["trainloss"][:len(lossDict[mode]["trainloss"])-patience]
-        valloss = lossDict[mode]["validloss"][:len(lossDict[mode]["validloss"])-patience]
+        trainloss = lossDict[mode]["trainloss"][:len(lossDict[mode]["trainloss"])]
+        valloss = lossDict[mode]["validloss"][:len(lossDict[mode]["validloss"])]
 
         ax.plot(range(len(trainloss)),trainloss,c=color[mode],label=modeltype+" train loss")
         ax.plot(range(len(valloss)),valloss,c=color[mode],linestyle="--",label=modeltype+" valid loss")
-        # ax.plot([len(valloss)-patience-1,len(valloss)-patience-1],[np.min(valloss)-0.2,np.max(valloss)+0.2],c='gray', linestyle='--')
+        ax.plot([len(valloss)-patience-1,len(valloss)-patience-1],[np.min(valloss)-0.2,np.max(valloss)+0.2],c=validationColor[mode], linestyle='dashdot')
     plt.title("Dataset "+dataname, fontsize='20')
     plt.ylabel("loss", fontsize='15')
     plt.xlabel("Epoch", fontsize='15')
@@ -70,7 +72,7 @@ def DrawPic(lossDict, output_path, dataname, patience=50):
     plt.legend(prop={'size': 12})
     # plt.show()
     plt.tight_layout()
-    plt.savefig(output_path+dataname+".jpg",dpi=400)
+    plt.savefig(output_path+".jpg",dpi=400)
     plt.close()
     print(dataname)
 
@@ -108,18 +110,22 @@ def main():
     modeltype = ["CNN", "Markonv"]
     outputName = {"CNN":"convolution-based network", "BConv":"Markonv-tf", "Markonv":"Markonv-based network"}
     datasetnamelist = [1,291,282,273]
+    randomSeedslist = [0, 23, 123, 345, 1234, 9, 2323, 927, 42, 48, 100, 420, 60, 320, 7767, 51]
+
     datasetnamedict = {"1":"1","291":"2","282":"3","273":"4"}
     result_path = "../../log/SpeedCompare/"
     output_path = "../../result/SpeedCompare/figure/"
     mkdir(output_path)
     for dataname in datasetnamelist:
         lossDict = {}
-        for mode in modeltype:
-            path = result_path+str(dataname)+"/"+mode
-            losslist = np.load(glob.glob(path+"/*npy")[0], allow_pickle=True).item()
-            lossDict[outputName[mode]] = losslist
+        for randomseed in randomSeedslist:
+            for mode in modeltype:
+                path = result_path+str(dataname)+"/"+mode
 
-        DrawPic(lossDict, output_path, str(datasetnamedict[str(dataname)]),patience=50)
+                losslist = np.load(glob.glob(path+"/*"+str(randomseed)+"*npy")[0], allow_pickle=True).item()
+                lossDict[outputName[mode]] = losslist
+
+            DrawPic(lossDict, output_path+str(datasetnamedict[str(dataname)])+"_"+str(randomseed), str(datasetnamedict[str(dataname)]),patience=50)
 
 
     ### training loss on bonito

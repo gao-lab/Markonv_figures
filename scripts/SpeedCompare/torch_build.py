@@ -60,8 +60,7 @@ def buildModel(kernel_size, number_of_kernel, outputdim,modeltype):
     Returns:
 
     """
-    if modeltype=="Markonv":
-        net = MarkonvVModel(int(kernel_size*1.5), number_of_kernel, outputdim)
+    net = MarkonvVModel(int(kernel_size*1.5), number_of_kernel, outputdim)
     return net
 
 class MarkonvVModel(nn.Module):
@@ -214,7 +213,7 @@ def trainMarkonv(modelsave_output_prefix,data_set, number_of_kernel, kernel_size
     # print(len(train_set),len(valid_set),len(test_set))
 
     device = 'cuda:'+GPUID
-    net = buildModel(kernel_size, number_of_kernel, 1, outputName)
+    net = MarkonvVModel(int(kernel_size*1.5), number_of_kernel, 1)
 
     net = net.to(device)
     print(net)
@@ -287,7 +286,6 @@ def trainMarkonv(modelsave_output_prefix,data_set, number_of_kernel, kernel_size
             break
 
     np.save(modellogname, {"trainloss": Trainlossonbatch, "validloss": validlossonbatch})
-
 
     return TrainTime
 
