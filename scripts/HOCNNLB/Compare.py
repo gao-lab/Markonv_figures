@@ -74,7 +74,7 @@ def Draw(path, ModeltypeDict):
     cols = Pddict.columns.tolist()
     cols = cols[1:2] + cols[0:1]+ cols[2:]
     cols = ['Markonv- \n based network', "Markonv-based \n HOCNNLB", 'HOCNNLB-1', 'HOCNNLB-2', 'HOCNNLB-3','HOCNNLB-4',]
-    cols = ['Markonv- \n based network',  'HOCNNLB-1', 'HOCNNLB-2', 'HOCNNLB-3','HOCNNLB-4',]
+    cols = ['Markonv- \n based network',  'HOCNNLB-1', 'HOCNNLB-2', 'HOCNNLB-3','HOCNNLB-4',"iDeepS","DeepBind"]
     # Pddict =Pddict.drop("VCNN-based model",axis=1)
 
     # Pddict.drop()
@@ -135,7 +135,7 @@ def Main():
     :return:
     """
 
-    path = "../../result/HOCNNLB/"
+    path = "../../result/HOCNNLB/HOCNNLB/"
     ModelType = ["MarkonvV", "HOCNNLB"]
 
 
@@ -163,7 +163,7 @@ def Main():
 
     ### 顺序不同
     ResultDict = dict(ResultDict, **dict2)
-    Draw("./", ResultDict)
+    Draw("../../result//HOCNNLB/", ResultDict)
 
 
 if __name__ == '__main__':

@@ -123,7 +123,9 @@ if __name__ == '__main__':
 					time.sleep(5)
 					pool.apply_async(run_model, (str(KernelLen), str(KernelNum), str(RandomSeed), str(dataname), "DANQS"))
 					time.sleep(5)
-					pool.apply_async(run_model, (str(KernelLen), str(KernelNum), str(RandomSeed), str(dataname), "LSTM_last"))
-					time.sleep(5)
+					# pool.apply_async(run_model, (str(KernelLen), str(KernelNum), str(RandomSeed), str(dataname), "LSTM_last"))
+					# time.sleep(5)
 	pool.close()
 	pool.join()
+
+

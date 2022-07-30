@@ -71,7 +71,7 @@ def Main():
 
 	for dataname in datasetnamelist:
 		resultPath = path+str(dataname)+"/"
-		ModelType = ["CNN","MarkonvV","DANQ","LSTM"]
+		ModelType = ["CNN","MarkonvV","DANQ","DANQS","LSTM"]
 
 		ResultDict = {}
 		for Mtype in ModelType:
@@ -82,7 +82,9 @@ def Main():
 			elif Mtype == "CNN":
 				ResultDict["Convolution-based network"] = auclist
 			elif Mtype == "DANQ":
-				ResultDict["CNN-RNN network"] = auclist
+				ResultDict["DANQ"] = auclist
+			elif Mtype == "DANQS":
+				ResultDict["DANQS"] = auclist
 			elif Mtype == "LSTM":
 				ResultDict["LSTM-based network"] = auclist
 			mkdir("../../result/simulation2merShuffle/files.2/")

@@ -150,7 +150,7 @@ class LSTM(nn.Module):
         self.LSTM = torch.nn.LSTM(input_size=in_channels, hidden_size=128, batch_first=True,bidirectional=True,bias=False)
         self.dropout = nn.Dropout(p=0.2)
         self.outputdim = outputdim
-        self.linear1 = torch.nn.Linear(128000, 512)
+        self.linear1 = torch.nn.Linear(256000, 512)
         self.linear2 = torch.nn.Linear(512, outputdim)
         self.relu = torch.nn.ReLU()
 
