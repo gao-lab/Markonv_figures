@@ -257,8 +257,11 @@ def trainMarkonv(modelsave_output_prefix,data_set, number_of_kernel, kernel_size
     else:
         net = MarkonvModel(kernel_size,number_of_kernel,1,outputName)
 
+    pdb.set_trace()
+
     net = net.to(device)
     print(net)
+    pytorch_total_params = sum(p.numel() for p in net.parameters())
     
     BCEloss = nn.BCELoss()
 

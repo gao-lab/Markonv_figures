@@ -68,6 +68,7 @@ def Main():
 	outputpath = "../../result/simulation2merShuffle/picture/"
 	mkdir(outputpath)
 	datasetnamelist = [1,291,282,273]
+	datasetnamedict = {"1": "1", "291": "2", "282": "3", "273": "4"}
 
 	for dataname in datasetnamelist:
 		resultPath = path+str(dataname)+"/"
@@ -91,7 +92,7 @@ def Main():
 
 			np.savetxt("../../result/simulation2merShuffle/files.2/"+str(dataname)+"_"+Mtype+"_auc.txt", np.asarray(auclist))
 
-		Draw(outputpath+str(dataname), ResultDict, dataname)
+		Draw(outputpath+str(dataname), ResultDict, datasetnamedict[str(dataname)])
 
 
 

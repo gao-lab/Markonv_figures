@@ -269,6 +269,7 @@ def main():
     DataFrobenius = {}
     mkdir(outputpath)
     for name in Datanamelist:
+        print(name)
         ResultPath = MotifPath + str(name) + "/MarkonvV/"
         # f = h5py.File(
         #     DatasetPath + str(name) + "/simulationMTM10_20_" + str(name) + ".hdf5",
@@ -288,9 +289,10 @@ def main():
         # minIndex = Frobenius.argmin()
         for i in range(sel_kernel_num):
             num = int(AllKernelPath[i].split("/")[-1].split(".")[0].split("kernel")[-1])
-            plot(AllKernelPath[i], f'{outputpath}{name}_kernel_{num}.png')
-
-            plotPWM(AllKernelPath[i])
+            print(f'{outputpath}{name}_kernel_{num}.png')
+            # plot(AllKernelPath[i], f'{outputpath}{name}_kernel_{num}.png')
+            #
+            # plotPWM(AllKernelPath[i])
 
 
 
