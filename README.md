@@ -137,3 +137,115 @@ python torch_trainMarkonv.py
 python DrawTheHistory.py
 ```
 The figure is saved in `result/SpeedCompare/figure/`.
+
+
+## Reproduce results related to additional figure 1
+
+1. Generate simulation datasets for training and testing
+
+```bash
+cd external/JasparSimu
+python3 PWMmotifSimu.py
+```
+The training and testing dataset is saved in `external/JasparSimu/HDF5/1/`.
+
+2. Training and evaluation
+
+```bash
+cd ../../scripts/JasparPWMtest
+python3 torch_trainMarkonv.py
+```
+
+3. Plot AUROC (Reproduce additional figure 1.B)
+
+```bash
+python3 Compare.py
+```
+The figure generated is saved in `result/JasparSimu/picture/1auc.png`.
+
+4. Recover motifs (Reproduce additional figure 1.B and Appendix G)
+
+```bash
+python3 geneRatemotifs.py
+python3 kernel2motif.py
+cd ../../
+```
+the additional figure 1.C is in result/JasperSimu/Motifs/1/MarkonvV, while the additional figure 1.B is in result/JasperSimu/PWMMotifs2
+
+## Reproduce results related to additional figure 2 and additional figure.4
+
+1. Generate simulation datasets for training and testing
+
+```bash
+cd external/simulation2merShuffle
+python3 generateData.py
+```
+
+2. Training and evaluation
+
+```bash
+cd ../../scripts/simulation2merShuffle
+python3 torch_trainMarkonv.py
+```
+
+3. Plot AUROC of all networks (Reproduce additional figure 4)
+
+```bash
+python3 Compare.py
+```
+The figure generated is saved in `~/result/simulation2merShuffle/picture/`.
+
+
+4. Plot AUROC between Markonv-based network and convolution-based network (Reproduce additional figure 2)
+
+```bash
+Rscript generate_fig_2.R
+```
+The figure generated is saved in `~/result/simulation/simulation.auroc.png`.
+
+
+5. Recover motifs (additional figure 3.A and additional figure 3.C)
+
+```bash
+python3 geneRatemotifs.py
+python3 kernel2motif.py
+cd 
+```
+The Markov transition matrix(additional figure 3.A) is saved in `result/simulation2merShuffle/Motifs/291/MarkonvV/*.png`.
+The Markov transition matrix(additional figure 3.C) is saved in `result/simulation2merShuffle/Motifs/291*.png`.
+
+
+
+
+
+## Reproduce results of additional figure 5 and additional figure 6
+
+Downloads training and test datasets from https://github.com/NWPU-903PR/HOCNNLB/blob/master/lncRBPdata.zip and put them into ./external/HOCNNLB
+
+```bash
+cd external/HOCNNLB 
+unzip lncRBPdata.zip
+mv RBPdata1201 fasta
+cd ../code/
+python generateHDF5.py
+
+cd ../../../scripts/HOCNNLB
+python torch_trainMarkonv.py
+
+python Compare.py
+python robust.py
+
+cd ../../
+```
+
+
+## Reproduce results of additional figure 7 and 64 loss curve in all-64-figures.zip
+
+```
+cd scripts/SpeedCompare
+python torch_trainMarkonv.py
+python DrawTheHistory.py
+```
+The figure is saved in `result/SpeedCompare/figure/`.
+
+

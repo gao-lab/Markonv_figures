@@ -163,7 +163,7 @@ def main():
             MTMreal = f[key]
 
         AllKernelPath = glob.glob(ResultPath + 'kernel*.npy')
-        sel_kernel_num = len(AllKernelPath)
+        sel_kernel_num=len(AllKernelPath)
         num = np.zeros(sel_kernel_num,dtype=int)
         Frobenius = np.zeros(sel_kernel_num)
         offset = np.zeros(sel_kernel_num,dtype=int)

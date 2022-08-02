@@ -104,7 +104,7 @@ def draw(kernels, savepath,RankIndex):
     two_decimal = np.vectorize(two_decimal)
 
     for i in range(kernels.shape[0]):
-        savepathtmp = savepath + "kernel_"+str(RankIndex[i])+".png"
+        savepathtmp = savepath + "motifs_kernel_"+str(RankIndex[i])+".png"
         kernel = kernels[i]
         kernel = kernel
 
@@ -233,7 +233,7 @@ def main():
 
             kernels = restoreMotif(net, RankIndex)
 
-            draw(kernels, RankIndex, path)
+            draw(kernels, path, RankIndex)
 
             GenerateFragments(X_test, X_test_onehot,net,kernel_size,path,RankIndex)
 
