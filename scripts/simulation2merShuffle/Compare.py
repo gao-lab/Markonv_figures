@@ -46,11 +46,12 @@ def Draw(path, ModeltypeDict, dataname):
 	Pddict = pd.DataFrame(ModeltypeDict)
 	#print('std')
 	#print(Pddict.std())
+	plt.figure(figsize=(8, 5))
 	ax = sns.boxplot(data=Pddict)
-	ax.set_xticklabels(ax.get_xticklabels(), rotation=30)
+	ax.set_xticklabels(ax.get_xticklabels(), fontsize=12, rotation=0)
 	plt.ylim(0.5, 1)
-	plt.ylabel("AUROC")
-	plt.xlabel(str(dataname))
+	plt.ylabel("AUROC", fontsize=15)
+	plt.xlabel(str(dataname), fontsize=15)
 	plt.tight_layout()
 	# Pddict.boxplot()
 	plt.savefig(path + "auc.png")
@@ -79,15 +80,15 @@ def Main():
 			resultPath = path+str(dataname)+"/"
 			auclist = loadResult(resultPath+Mtype+"/")
 			if Mtype == "MarkonvV":
-				ResultDict["Markonv-based network"] = auclist
+				ResultDict["Markonv-based \n network"] = auclist
 			elif Mtype == "CNN":
-				ResultDict["Convolution-based network"] = auclist
+				ResultDict["Convolution-based \n network"] = auclist
 			elif Mtype == "DANQ":
 				ResultDict["DANQ"] = auclist
 			elif Mtype == "DANQS":
 				ResultDict["DANQS"] = auclist
 			elif Mtype == "LSTM":
-				ResultDict["LSTM-based network"] = auclist
+				ResultDict["LSTM-based \n network"] = auclist
 			mkdir("../../result/simulation2merShuffle/files.2/")
 
 			np.savetxt("../../result/simulation2merShuffle/files.2/"+str(dataname)+"_"+Mtype+"_auc.txt", np.asarray(auclist))

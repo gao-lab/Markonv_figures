@@ -60,14 +60,13 @@ def Draw(path, ModeltypeDict):
     # draw box plot
 
     Pddict = pd.DataFrame(ModeltypeDict)
-
-    plt.figure(figsize=(16, 5))
+    plt.figure(figsize=(10, 15))
     plt.rc('font', family='Times New Roman')
-    ax = sns.boxplot(data=Pddict,saturation=0.4)
-    ax.set_xticklabels(ax.get_xticklabels(), rotation=30)
-    plt.ylim(0.5, 1.09)
-    plt.ylabel("AUROC",fontsize= 15)
-    plt.xlabel("RBP names",fontsize= 15)
+    ax = sns.boxplot(data=Pddict,saturation=0.4,orient="h")
+    # ax.set_xticklabels(ax.get_xticklabels(), fontsize=5 , rotation=0)
+    plt.xlim(0.5, 1)
+    plt.ylabel("RBP names",fontsize= 15)
+    plt.xlabel("AUROC",fontsize= 15)
     plt.title("AUROC distribution across all 31 RBP datasets", fontsize=15)
     # Pddict.boxplot()
 
