@@ -124,11 +124,18 @@ bash run_analysis_conv.sh
 Markonv-based bonito network
 ```
 bash run_analysis_markonv.sh
-cd ../../../
 ```
 The read accuracy for each read is saved in `result/bonito/*_reads.tsv`, and the consensus accuracy for each read is saved in `result/bonito/*_assembly.tsv`.
 The median of read accuracy and consensus accuracy for each network (in Table 2) will be printed on the screen.
 
+4. Testing for multiple random seeds
+
+```
+cd ../
+sbatch sbatch_multiple_seed.sh
+cd ../../
+```
+The result file is saved in `result/bonito/bonito_multiple_seeds.tsv`. You can use `result/bonito/stat_multiple_seeds.py` to calculate the mean and standard deviation. (Table 2)
 
 ## Reproduce results related to loss curve (Figure 5 and Appdenix H)
 ```
