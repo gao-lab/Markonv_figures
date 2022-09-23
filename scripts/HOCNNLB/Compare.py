@@ -79,14 +79,14 @@ def Draw(path, ModeltypeDict):
 
     # Pddict.drop()
     Pddict = Pddict[cols]
-    plt.figure(figsize=(10, 5))
+    plt.figure(figsize=(10, 8))
     plt.rc('font', family='Times New Roman')
     ax = sns.boxplot(data=Pddict,saturation=0.4)
-    ax.set_xticklabels(ax.get_xticklabels(), rotation=0)
+    ax.set_xticklabels(ax.get_xticklabels(), rotation=0,fontsize= 13)
     plt.ylim(0.5, 1.09)
-    plt.ylabel("AUROC",fontsize= 15)
-    plt.xlabel("networks",fontsize= 15)
-    plt.title("AUROC distribution across all 31 RBP datasets", fontsize=15)
+    plt.ylabel("AUROC",fontsize= 20)
+    plt.xlabel("networks",fontsize= 20)
+    plt.title("AUROC distribution across all 31 RBP datasets", fontsize=25)
     # Pddict.boxplot()
 
     pairs = [[0,1],[0,2]]
