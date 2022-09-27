@@ -69,6 +69,7 @@ def Draw(path, ModeltypeDict):
     """
 
     # draw box plot
+    sns.set_palette(sns.color_palette("ch:start=.2,rot=-.3"))
     Pddict = pd.DataFrame(ModeltypeDict)
     Pddict.to_csv("./test.csv")
     cols = Pddict.columns.tolist()
@@ -79,9 +80,9 @@ def Draw(path, ModeltypeDict):
 
     # Pddict.drop()
     Pddict = Pddict[cols]
-    plt.figure(figsize=(10, 8))
+    plt.figure(figsize=(12, 8))
     plt.rc('font', family='Times New Roman')
-    ax = sns.boxplot(data=Pddict,saturation=0.4)
+    ax = sns.boxplot(data=Pddict,saturation=0.4,palette =sns.color_palette("light:#5A9"))
     ax.set_xticklabels(ax.get_xticklabels(), rotation=0,fontsize= 13)
     plt.ylim(0.5, 1.09)
     plt.ylabel("AUROC",fontsize= 20)

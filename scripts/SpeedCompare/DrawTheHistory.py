@@ -48,12 +48,12 @@ def DrawPic(lossDict, output_path, dataname, patience=50):
 
     """
 
-    fig, ax = plt.subplots(figsize=(6, 6))
+    fig, ax = plt.subplots(figsize=(8, 6))
     plt.rcParams["font.family"] = "Times New Roman"
-    color = {"Markonv-based network":"black", "convolution-based network":"blue",
-    "bonito":"blue","Markonv-based basecaller":"black"}
+    color = {"Markonv-based network":"silver", "convolution-based network":"lightcoral",
+    "bonito":"lightcoral","Markonv-based basecaller":"silver"}
 
-    validationColor = {"convolution-based network":"green","Markonv-based network":"red"}
+    validationColor = {"convolution-based network":"mediumslateblue","Markonv-based network":"aquamarine"}
 
     for mode in lossDict.keys():
         print(mode)
@@ -72,7 +72,7 @@ def DrawPic(lossDict, output_path, dataname, patience=50):
     plt.legend(prop={'size': 12})
     # plt.show()
     plt.tight_layout()
-    plt.savefig(output_path+".jpg",dpi=400)
+    plt.savefig(output_path+".png",dpi=400)
     plt.close()
     print(dataname)
 
