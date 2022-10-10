@@ -30,7 +30,7 @@ def main():
 
     namelist = ["Markonv-basde bonito"]*len(result["read_markonv"])+["Bonito"]*len(result["read_markonv"])
     Readacc = list(result["read_markonv"])+list(result["read_conv"])
-    sizelist = [9.115728]*len(result["read_markonv"])+[27.008104]*len(result["read_markonv"])
+    sizelist = [(9.115728/3)**2]*len(result["read_markonv"])+[(27.008104/3)**2]*len(result["read_markonv"])
     consensusacc =list(result["assembly_markonv"])+list(result["assembly_conv"])
     colorlist = ["read"]*len(result["read_markonv"])+["Bonito"]*len(result["read_markonv"])
     # fig = plt.figure(figsize=(8, 14))
@@ -41,6 +41,9 @@ def main():
     # ax.set_xlabel("consensus accuracy")
     # ax.set_ylabel("read accuracy")
     # ax.set(title='model ')
+    fig.update_layout({"paper_bgcolor":"rgba(0,0,0,0)","plot_bgcolor":"rgba(0,0,0,0)"})
+    fig.update_xaxes(showline=True, linewidth=2, linecolor='black')
+    fig.update_yaxes(showline=True, linewidth=2, linecolor='black')
     fig.show()
 
 
