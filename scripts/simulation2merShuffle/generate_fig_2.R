@@ -23,7 +23,8 @@ auroc.melt.dt <- melt(data=auroc.dt, id.vars=c("dataset", "dataset.to.plot", "in
     . + stat_compare_means(comparisons=list(c("Markonv-based", "Classical convolution-based")), method="wilcox.test", method.args=list(alternative="two.sided")) ->.;
     . + theme_pubr() -> .;
     . + facet_grid(~dataset.to.plot, scales="free_y") -> .;
-    . + labs(x="", y="\n\nAUROC", fill="") ->.;       
+    . + labs(x="", y="\n\nAUROC", fill="") ->.;
+    . + scale_fill_viridis_d(option="Pastel1") -> .;
     . + theme(text = element_text(size=20), axis.text.x=element_blank()) -> .;
     ggsave(filename="../../result/simulation2merShuffle/simulation2merShuffle.auroc.png", plot=., device="png", width=18, height=15, units="cm")
 }

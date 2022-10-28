@@ -115,27 +115,28 @@ def plot(loadpath, savepath, MTMreal):
                         fmt="s",
                         vmin=0,
                         vmax=1,
-                        cmap=sns.light_palette("#2ecc71", as_cmap=True),
+                        cmap=sns.color_palette("light:#5A9", as_cmap=True),
                         cbar=False,
                         xticklabels=[" "],
                         yticklabels=["A","C","G","T"],
                         linewidths=0)
             ax.set_yticklabels(ax.get_yticklabels(), rotation=0)
-            ax.set_title("S1", fontsize=15)
+            ax.set_title(r"$P_1$", fontsize=15)
         else:
-            drawmatrix = MTM[:, :, k].reshape(4, 4)
+            drawmatrix = MTM[:, :, k].reshape(4, 4).T
             sns.heatmap(drawmatrix,
                         ax=ax,
                         annot=two_decimal(drawmatrix),
                         fmt="s",
                         vmin=0,
                         vmax=1,
-                        cmap=sns.light_palette("#2ecc71", as_cmap=True),
+                        cmap=sns.color_palette("light:#5A9", as_cmap=True),
                         cbar=False,
                         xticklabels=["A","C","G","T"],
                         yticklabels=False,
                         linewidths=0)
-            ax.set_title(f"S{k} → S{k+1}", fontsize=15)
+            ktem = k + 1
+            ax.set_title(f"$P_{k} → P_{{{ktem}}}$", fontsize=15)
         ax.xaxis.tick_top()
         ax.tick_params(bottom=False,top=False,left=False,right=False)
 

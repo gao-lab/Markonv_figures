@@ -22,13 +22,13 @@ def main():
     """
     ####load feature
 
-    modelsize = {"Markonv-basde bonito":9115728, "Bonito":27008104}
+    modelsize = {"Markonv-based bonito":9115728, "Bonito":27008104}
 
     result = pd.read_csv("../../result/bonito/bonito_multiple_seeds.tsv",sep="\t")
 
-    # read_acc = {"Markonv-basde bonito":result["read_markonv"], "Bonito":result["read_conv"]}
+    # read_acc = {"Markonv-based bonito":result["read_markonv"], "Bonito":result["read_conv"]}
 
-    namelist = ["Markonv-basde bonito"]*len(result["read_markonv"])+["Bonito"]*len(result["read_markonv"])
+    namelist = ["Markonv-based bonito"]*len(result["read_markonv"])+["Bonito"]*len(result["read_markonv"])
     Readacc = list(result["read_markonv"])+list(result["read_conv"])
     sizelist = [(9.115728/3)**2]*len(result["read_markonv"])+[(27.008104/3)**2]*len(result["read_markonv"])
     consensusacc =list(result["assembly_markonv"])+list(result["assembly_conv"])

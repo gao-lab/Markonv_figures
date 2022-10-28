@@ -140,9 +140,9 @@ def visualize(path, lenlist, seed, complexityChoice):
                                 yticklabels=["A","C","G","T"],
                                 linewidths=0)
                     ax.set_yticklabels(ax.get_yticklabels(), rotation=0)
-                    ax.set_title("S1",fontsize=15)
+                    ax.set_title(r"$P_1$",fontsize=15)
                 else:
-                    sns.heatmap(MTM[:, :, k].reshape(4, 4),
+                    sns.heatmap(MTM[:, :, k].reshape(4, 4).T,
                                 ax=ax,
                                 annot=True,
                                 vmin=0,
@@ -152,7 +152,9 @@ def visualize(path, lenlist, seed, complexityChoice):
                                 xticklabels=["A","C","G","T"],
                                 yticklabels=False,
                                 linewidths=0)
-                    ax.set_title(f"S{k} → S{k+1}",fontsize=15)
+
+                    ktem = k+1
+                    ax.set_title(f"$P_{k} → P_{{{ktem}}}$",fontsize=15)
                 ax.xaxis.tick_top()
                 ax.tick_params(bottom=False,top=False,left=False,right=False)
 
@@ -205,10 +207,10 @@ def drawMotif():
                                 linewidths=0)
                     ax.set_yticklabels(ax.get_yticklabels(), rotation=0)
                     if i == 0:
-                        ax.set_title("S1", fontsize=18)
+                        ax.set_title(r"$P_{1}$", fontsize=18)
                 else:
                     if i == 0:
-                        sns.heatmap(MTM[:, :, k].reshape(4, 4),
+                        sns.heatmap(MTM[:, :, k].reshape(4, 4).T,
                                     ax=ax,
                                     annot=True,
                                     vmin=0,
@@ -218,10 +220,11 @@ def drawMotif():
                                     xticklabels=["A","C","G","T"],
                                     yticklabels=False,
                                     linewidths=0)
-                        ax.set_title(f"S{k} → S{k+1}", fontsize=18)
+                        ktem = k + 1
+                        ax.set_title(f"$P_{k} → P_{{{ktem}}}$", fontsize=18)
 
                     else:
-                        sns.heatmap(MTM[:, :, k].reshape(4, 4),
+                        sns.heatmap(MTM[:, :, k].reshape(4, 4).T,
                                     ax=ax,
                                     annot=True,
                                     vmin=0,
@@ -234,7 +237,7 @@ def drawMotif():
                 ax.xaxis.tick_top()
                 ax.tick_params(bottom=False,top=False,left=False,right=False)
             if i == 0:
-                axes[i,5].set_title(f"Motif {i+1} (entropy={entropy:.2f})\nS5 → S6", fontsize=18)
+                axes[i,5].set_title(f"Motif {i+1} (entropy={entropy:.2f})\n$P_{5} → P_{6}$", fontsize=18)
             else:
                 axes[i,5].set_title(f"Motif {i+1} (entropy={entropy:.2f})", fontsize=18)
     plt.tight_layout()
